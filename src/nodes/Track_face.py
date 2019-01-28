@@ -35,7 +35,7 @@ def talker(pose):
     pub.publish(str)
 
 
-def center_of_the_image(img)
+def center_of_the_image(img):
 
     img_size = img.size
 
@@ -45,7 +45,7 @@ def center_of_the_image(img)
 
     return img_center
 
-def Motor_Command(center,pos_face)
+def Motor_Command(center,pos_face):
 
     # Determining the motor command
 
@@ -57,7 +57,7 @@ def Motor_Command(center,pos_face)
     command[1]=center[1]-pos_face[1]/Norm
 
     return command
-o
+
 
 
 def main():
