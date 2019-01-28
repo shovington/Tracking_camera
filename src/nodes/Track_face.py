@@ -34,6 +34,32 @@ def talker(pose):
     rospy.loginfo(str)
     pub.publish(str)
 
+
+def center_of_the_image(img)
+
+    img_size = img.size
+
+    # Determining the center of the image
+    img_center[0] = img_size[0] / 2
+    img_center[1] = img_size[1] / 2
+
+    return img_center
+
+def Motor_Command(center,pos_face)
+
+    # Determining the motor command
+
+    command=list()
+    # Norm of the difference of the center of the face and the center of the image
+    Norm = sqrt((center[0]-pos_face[0])**2+(center[1]-pos_face[1])**2)
+
+    command[0]=center[0]-pos_face[0]/Norm
+    command[1]=center[1]-pos_face[1]/Norm
+
+    return command
+o
+
+
 def main():
 	# Path where th classifier is
     haar_face_cascade = cv2.CascadeClassifier('home/catkin_ws/src/Tracking_camera/src/nodes/haarcascade_frontalface_alt.xml')
@@ -62,7 +88,9 @@ def main():
 # + str(rospy.get_time())
 				# Publish the coordinates on Face_pos topic
                 talker(pose)
-                
+
+            center_of_the_image=center_of_the_image(frame)
+            print(Motor_Command(center_of_the_image, pose))
         else:
             pose = "Detecting no face(s)"
         	# Publish the coordinates on Face_pos topic
