@@ -37,8 +37,8 @@ def talker(pose):
 
 def main():
 	# Path where th classifier is
-    haar_face_cascade = cv2.CascadeClassifier('/home/samuel/catkin_ws/src/Tracking_camera/src/nodes/haarcascade_frontalface_alt.xml')
-    lbp_face_cascade = cv2.CascadeClassifier('/home/samuel/catkin_ws/src/Tracking_camera/src/nodes/lbpcascade_frontalface.xml')
+    haar_face_cascade = cv2.CascadeClassifier('/home/samuel/catkin_ws/src/Tracking_camera/tracking_camera/src/nodes/haarcascade_frontalface_alt.xml')
+    lbp_face_cascade = cv2.CascadeClassifier('/home/samuel/catkin_ws/src/Tracking_camera/tracking_camera/src/nodes/lbpcascade_frontalface.xml')
  
 	# 0 for webcam and 1 for usb cam
     cap = cv2.VideoCapture(0)
