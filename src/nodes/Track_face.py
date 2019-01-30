@@ -34,6 +34,7 @@ def talker(pose):
     rospy.loginfo(str)
     pub.publish(str)
 
+
 def main():
 	# Path where th classifier is
     haar_face_cascade = cv2.CascadeClassifier('/home/samuel/catkin_ws/src/Tracking_camera/src/nodes/haarcascade_frontalface_alt.xml')
