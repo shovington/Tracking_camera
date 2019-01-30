@@ -1,0 +1,11 @@
+<library path="src">
+<!-- type=ros package, filename, className -->
+  <class name="CamGUI" type="tracking_cam_gui.tracking_cam_plugin.CamGUI" base_class_type="rqt_gui_py::Plugin">
+    <description>
+      Interface for tracking camera
+    </description>
+    <qtgui>
+      <label>Tracking Camera</label>
+    </qtgui>
+  </class>
+</library>
