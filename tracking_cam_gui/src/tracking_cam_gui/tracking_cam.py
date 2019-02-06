@@ -35,13 +35,13 @@ class TrackingCamWidget(QtWidgets.QWidget):
         self.disable_btn.clicked[bool].connect(self.disable_motors)
         self.auto_btn.clicked[bool].connect(lambda: self.change_mode(1))
         self.track_btn.clicked[bool].connect(self.track_face)
-        self.home_btn.clicked[bool].connect(lambda: self.move(CMD[HOME]))
+        self.home_btn.clicked[bool].connect(lambda: self.move(CMD["HOME"]))
 
         self.min_yaw.clicked[bool].connect(lambda: self.move(CMD[MIN_YAW]))
         self.plus_yaw.clicked[bool].connect(lambda: self.move(CMD[PLUS_YAW]))
         self.min_pitch.clicked[bool].connect(lambda: self.move(CMD[MIN_PITCH]))
         self.plus_pitch.clicked[bool].connect(lambda: self.move(CMD[PLUS_PITCH]))
-        self.min_roll.clicked[bool].connect(lambda: self.move(CMD[MIN_ROLL])
+        self.min_roll.clicked[bool].connect(lambda: self.move(CMD[MIN_ROLL]))
         self.plus_roll.clicked[bool].connect(lambda: self.move(CMD[PLUS_ROLL]))
 
         self.cmd_pub = rospy.Publisher("cmd_manual", Int32, queue_size=10)

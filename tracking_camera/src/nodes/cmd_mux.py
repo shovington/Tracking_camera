@@ -2,6 +2,7 @@
 
 import rospy
 from std_msgs.msg import Float32, Bool, Int32
+from dynamixel_workbench_msgs.srv import DynamixelCommand, DynamixelCommandRequest
 
 
 MANUAL = 0
@@ -22,23 +23,23 @@ class CmdMux():
 
         self.man_sub = rospy.Subscriber("cmd_manual", Int32, self.move_man)
 
-        self.cmd_publisher = rospy.Publisher("test", Int32)
+        self.cmd_publisher = rospy.Publisher("test", Int32, queue_size=10)
         rospy.spin()
 
-      def man_mouv(self, dir):
-        if dir == CMD[HOME]:
-          rospy.wait_for_service('dynamixel_command')
-          try:
-              move_yaw = rospy.ServiceProxy('dynamixel_command', DynamixelCommand)
-              request = DynamixelCommandRequest()
-              request.id = 1
-              request.addr_name = "Goal_Position"
-              request.value = 0
-              print request
-              response = call_load_file(request)
+    def move_man(self, dir):
+      if dir.data == CMD["HOME"]:
+        rospy.wait_for_service('/dynamixel_workbench/dynamixel_command')
+        try:
+            move_yaw = rospy.ServiceProxy('/dynamixel_workbench/dynamixel_command', DynamixelCommand)
+            request = DynamixelCommandRequest()
+            request.id = 3
+            request.addr_name = "Goal_Position"
+            request.value = 0
+            print request
+            response = move_yaw(request)
           
-          except rospy.ServiceException, e:
-              print "Service call failed: %s"%e
+        except rospy.ServiceException, e:
+            print "Service call failed: %s"%e
 
 if __name__ == '__main__':
     # Initialize the node and name it.
