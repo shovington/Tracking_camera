@@ -16,7 +16,8 @@ CMD = {"MIN_YAW": 0,
        "PLUS_PITCH": 3,
        "MIN_ROLL": 4,
        "PLUS_ROLL": 5,
-       "HOME":6}
+       "HOME":6,
+       "ENABLE":7}
 
 
 class TrackingCamWidget(QtWidgets.QWidget):
@@ -32,7 +33,7 @@ class TrackingCamWidget(QtWidgets.QWidget):
         self.mode = 0  # Manual mode
 
         self.manual_btn.clicked[bool].connect(lambda: self.change_mode(0))
-        self.disable_btn.clicked[bool].connect(self.disable_motors)
+        self.disable_btn.clicked[bool].connect(lambda: self.move(CMD["ENABLE"]))
         self.auto_btn.clicked[bool].connect(lambda: self.change_mode(1))
         self.track_btn.clicked[bool].connect(self.track_face)
         self.home_btn.clicked[bool].connect(lambda: self.move(CMD["HOME"]))
@@ -60,8 +61,7 @@ class TrackingCamWidget(QtWidgets.QWidget):
             self.mode = 1
 
     def disable_motors(self):
-        print("DISABLE MOTORS")
-        pass
+        self.cmd_pub(CMD["ENABLE"])
 
     def track_face(self):
         print("TRACK FACE")
