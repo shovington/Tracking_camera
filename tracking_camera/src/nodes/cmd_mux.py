@@ -25,29 +25,29 @@ class CmdMux():
     def move_man(self, dir):
         if dir.data == CMD["HOME"]:
             self.enable_motors(1)
-            self.call_motor_cmd(1, "Goal_Position", 2048)
+            self.call_motor_cmd(1, "Goal_Position", YAW_HOME)
             rospy.sleep(0.5)
-            self.call_motor_cmd(2, "Goal_Position", 2800)
+            self.call_motor_cmd(2, "Goal_Position", PITCH_HOME)
             rospy.sleep(0.5)
-            self.call_motor_cmd(3, "Goal_Position", 3072)
+            self.call_motor_cmd(3, "Goal_Position", ROLL_HOME)
 
         elif dir.data == CMD["MIN_YAW"]:
-          pass
+            self.call_motor_cmd(1, "Goal_Position", YAW_HOME)
 
         elif dir.data == CMD["PLUS_YAW"]:
-          pass
+            self.call_motor_cmd(1, "Goal_Position", YAW_HOME)
 
         elif dir.data == CMD["MIN_PITCH"]:
-          pass
+            self.call_motor_cmd(2, "Goal_Position", PITCH_HOME)
 
         elif dir.data == CMD["PLUS_PITCH"]:
-          pass
+            self.call_motor_cmd(2, "Goal_Position", PITCH_HOME)
 
         elif dir.data == CMD["MIN_ROLL"]:
-          pass
+            self.call_motor_cmd(3, "Goal_Position", ROLL_HOME)
 
         elif dir.data == CMD["PLUS_ROLL"]:
-          pass
+            self.call_motor_cmd(3, "Goal_Position", ROLL_HOME)
           
         elif dir.data == CMD["ENABLE"]:
           self.enable_motors(1)
