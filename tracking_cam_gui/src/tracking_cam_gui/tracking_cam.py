@@ -10,6 +10,8 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 from std_msgs.msg import Float32, Bool, Int32
 from constants import * 
+from dynamixel_workbench_msgs.msg import *
+from std_msgs.msg import Float32, Bool, Int32, Int32MultiArray
 
 
 class TrackingCamWidget(QtWidgets.QWidget):
@@ -18,6 +20,8 @@ class TrackingCamWidget(QtWidgets.QWidget):
 
         ui_file = os.path.join(rospkg.RosPack().get_path('tracking_cam_gui'), 'resource', 'tracking_cam.ui')
         loadUi(ui_file, self)
+        
+        self.motor_sub = rospy.Subscriber("motors_position", Int32MultiArray, self.update_motors)
 
         rp = RosPack()
         self.pkg_path = rp.get_path('tracking_cam_gui')
@@ -38,6 +42,12 @@ class TrackingCamWidget(QtWidgets.QWidget):
 
         self.cmd_pub = rospy.Publisher("cmd_manual", Int32, queue_size=10)
 
+    def update_motors(self, state):
+        # TODO : doesnt work
+        #self.val_yaw.setText(str(state.data[0]))
+        #self.val_pitch.setText(str(state.data[1])) 
+        #self.val_roll.setText(str(state.data[2]))
+        pass
 
     def change_mode(self, mode):
         if mode == MANUAL:
