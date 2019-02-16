@@ -1,0 +1,15 @@
+<?xml version='1.0'?>
+<launch>
+
+<include file="$(find dynamixel_workbench_controllers)/launch/dynamixel_controllers.launch"/>
+
+<node pkg="joy" name="joy_node" type="joy_node" respawn="false" output="screen">
+	</node>
+
+<node pkg="tracking_camera" name="cmd_mux" type="cmd_mux.py" respawn="false" output="screen">
+	</node>
+
+<node pkg="tracking_cam_gui" name="tracking_cam_gui" type="tracking_cam_gui" respawn="false" output="screen">
+	</node>
+
+</launch>

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>300</width>
+    <width>305</width>
     <height>376</height>
    </rect>
   </property>
@@ -75,14 +75,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QTextEdit" name="val_yaw">
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>30</height>
-          </size>
-         </property>
-        </widget>
+        <widget class="QLineEdit" name="val_yaw"/>
        </item>
        <item>
         <widget class="QPushButton" name="plus_yaw">
@@ -103,14 +96,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QTextEdit" name="val_pitch">
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>30</height>
-          </size>
-         </property>
-        </widget>
+        <widget class="QLineEdit" name="val_pitch"/>
        </item>
        <item>
         <widget class="QPushButton" name="plus_pitch">
@@ -131,14 +117,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QTextEdit" name="val_roll">
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>30</height>
-          </size>
-         </property>
-        </widget>
+        <widget class="QLineEdit" name="val_roll"/>
        </item>
        <item>
         <widget class="QPushButton" name="plus_roll">

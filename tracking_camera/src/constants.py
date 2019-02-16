@@ -13,10 +13,18 @@ CMD = {"MIN_YAW": 0,
        "ENABLE": 7,
        "DISABLE": 8}
 
+XBOX = {"A": 0,
+        "B": 1,
+        "X": 2,
+        "Y": 3,
+        "LB": 4,
+        "RB": 5,
+        "HOME": 7}
+
 MAX_SPEED = 1
 
 YAW_HOME = 3072
-PITCH_HOME = 780
+PITCH_HOME = 650
 ROLL_HOME = 3072
 RANGE = 2048
 
