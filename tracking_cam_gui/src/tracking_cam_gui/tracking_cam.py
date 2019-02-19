@@ -31,12 +31,14 @@ class TrackingCamWidget(QtWidgets.QWidget):
         self.track_btn.clicked[bool].connect(self.track_face)
         self.home_btn.clicked[bool].connect(lambda: self.move(CMD["HOME"]))
 
-        self.min_yaw.clicked[bool].connect(lambda: self.move(CMD["MIN_YAW"]))
-        self.plus_yaw.clicked[bool].connect(lambda: self.move(CMD["PLUS_YAW"]))
-        self.min_pitch.clicked[bool].connect(lambda: self.move(CMD["MIN_PITCH"]))
-        self.plus_pitch.clicked[bool].connect(lambda: self.move(CMD["PLUS_PITCH"]))
-        self.min_roll.clicked[bool].connect(lambda: self.move(CMD["MIN_ROLL"]))
-        self.plus_roll.clicked[bool].connect(lambda: self.move(CMD["PLUS_ROLL"]))
+        #self.min_yaw.clicked[bool].connect(lambda: self.move(CMD["MIN_YAW"]))
+        #self.plus_yaw.clicked[bool].connect(lambda: self.move(CMD["PLUS_YAW"]))
+        #self.min_pitch.clicked[bool].connect(lambda: self.move(CMD["MIN_PITCH"]))
+        #self.plus_pitch.clicked[bool].connect(lambda: self.move(CMD["PLUS_PITCH"]))
+        #self.min_roll.clicked[bool].connect(lambda: self.move(CMD["MIN_ROLL"]))
+        #self.plus_roll.clicked[bool].connect(lambda: self.move(CMD["PLUS_ROLL"]))
+
+        self.yaw_slider.valueChanged[int].connect(lambda: self.slider_callback())
         
         self.val_yaw.setText(str(0))
         self.val_pitch.setText(str(0)) 
@@ -76,4 +78,30 @@ class TrackingCamWidget(QtWidgets.QWidget):
 
     def move(self, dir):
         self.cmd_pub.publish(dir)
+
+    # Call motor service
+    def call_motor_cmd(self, id, command, value):
+        rospy.wait_for_service('/dynamixel_workbench/dynamixel_command', 0.1)
+        try:
+            move_motor = rospy.ServiceProxy('/dynamixel_workbench/dynamixel_command', DynamixelCommand)
+            request = DynamixelCommandRequest()
+            request.id = id
+            request.addr_name = command
+            request.value = value
+            print request
+            response = move_motor(request)
+
+        except rospy.ServiceException, e:
+            print "Service call failed: %s"%e
+
+    # Enable motors
+    def enable_motors(self, enable):
+        self.call_motor_cmd(1, "Torque_Enable", enable)
+        self.call_motor_cmd(2, "Torque_Enable", enable)
+        self.call_motor_cmd(3, "Torque_Enable", enable)
+
+
+    def slider_callback(self, axis, value):
+        self.enable(True)
+        self.call_motor_cmd(axis, "Goal_Position", value)
 

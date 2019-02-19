@@ -16,54 +16,89 @@
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
     <layout class="QGridLayout" name="gridLayout">
-     <item row="8" column="2">
-      <widget class="QPushButton" name="disable_btn">
-       <property name="text">
-        <string>Disable</string>
-       </property>
-      </widget>
-     </item>
-     <item row="6" column="0">
-      <widget class="QLabel" name="label_3">
-       <property name="text">
-        <string>Roll</string>
-       </property>
-      </widget>
-     </item>
-     <item row="8" column="1">
+     <item row="10" column="1">
       <widget class="QPushButton" name="home_btn">
        <property name="text">
         <string>Home</string>
        </property>
       </widget>
      </item>
-     <item row="4" column="0">
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>Yaw</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="0" colspan="3">
-      <widget class="QPushButton" name="auto_btn">
-       <property name="text">
-        <string>Auto</string>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="0">
+     <item row="6" column="0">
       <widget class="QLabel" name="label_2">
        <property name="text">
         <string>Pitch</string>
        </property>
       </widget>
      </item>
-     <item row="1" column="0" colspan="3">
-      <widget class="QPushButton" name="track_btn">
+     <item row="6" column="1" colspan="2">
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <widget class="QPushButton" name="min_pitch">
+         <property name="text">
+          <string>-</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="val_pitch"/>
+       </item>
+       <item>
+        <widget class="QPushButton" name="plus_pitch">
+         <property name="text">
+          <string>+</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="8" column="0">
+      <widget class="QLabel" name="label_3">
        <property name="text">
-        <string>Track Face</string>
+        <string>Roll</string>
        </property>
       </widget>
+     </item>
+     <item row="10" column="2">
+      <widget class="QPushButton" name="disable_btn">
+       <property name="text">
+        <string>Disable</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="1" colspan="2">
+      <widget class="QSlider" name="pitch_slider">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1" colspan="2">
+      <widget class="QSlider" name="yaw_slider">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="8" column="1" colspan="2">
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <item>
+        <widget class="QPushButton" name="min_roll">
+         <property name="text">
+          <string>-</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="val_roll"/>
+       </item>
+       <item>
+        <widget class="QPushButton" name="plus_roll">
+         <property name="text">
+          <string>+</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
      <item row="4" column="1" colspan="2">
       <layout class="QHBoxLayout" name="horizontalLayout">
@@ -86,47 +121,33 @@
        </item>
       </layout>
      </item>
-     <item row="5" column="1" colspan="2">
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
-       <item>
-        <widget class="QPushButton" name="min_pitch">
-         <property name="text">
-          <string>-</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLineEdit" name="val_pitch"/>
-       </item>
-       <item>
-        <widget class="QPushButton" name="plus_pitch">
-         <property name="text">
-          <string>+</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
+     <item row="1" column="0" colspan="3">
+      <widget class="QPushButton" name="track_btn">
+       <property name="text">
+        <string>Track Face</string>
+       </property>
+      </widget>
      </item>
-     <item row="6" column="1" colspan="2">
-      <layout class="QHBoxLayout" name="horizontalLayout_3">
-       <item>
-        <widget class="QPushButton" name="min_roll">
-         <property name="text">
-          <string>-</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLineEdit" name="val_roll"/>
-       </item>
-       <item>
-        <widget class="QPushButton" name="plus_roll">
-         <property name="text">
-          <string>+</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
+     <item row="4" column="0">
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Yaw</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0" colspan="3">
+      <widget class="QPushButton" name="auto_btn">
+       <property name="text">
+        <string>Auto</string>
+       </property>
+      </widget>
+     </item>
+     <item row="7" column="1" colspan="2">
+      <widget class="QSlider" name="roll_slider">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
