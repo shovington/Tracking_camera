@@ -11,6 +11,8 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from .tracking_cam import TrackingCamWidget
 from .motor_control import MotorControl
 from constants import *
+from dynamixel_workbench_msgs.msg import *
+from dynamixel_workbench_msgs.srv import *
 
 
 class TrackingCamPlugin(Plugin):
@@ -71,8 +73,6 @@ class TrackingCamMain():
         self.mode = MANUAL
 
         self.motor_sub = rospy.Subscriber("/dynamixel_workbench/dynamixel_state", DynamixelStateList, self.update_motors)
-        
-        rospy.spin()
 
     def get_view(self):
         return self.view

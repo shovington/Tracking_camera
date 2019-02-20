@@ -3,10 +3,7 @@
 
 <include file="$(find tracking_camera)/launch/motors.launch"/>
 
-<node pkg="tracking_camera" name="cmd_mux" type="cmd_mux.py" respawn="false" output="screen">
-	</node>
-
-<node pkg="tracking_cam_gui" name="tracking_cam_gui" type="tracking_cam_gui" respawn="false" output="screen">
+<node pkg="tracking_camera" name="tracking_camera" type="tracking_camera" respawn="false" output="screen">
 	</node>
 
 </launch>
