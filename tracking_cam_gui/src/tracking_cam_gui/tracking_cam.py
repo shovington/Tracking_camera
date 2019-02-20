@@ -8,9 +8,10 @@ from python_qt_binding.QtWidgets import QFileDialog
 from python_qt_binding.QtCore import QCoreApplication
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-from std_msgs.msg import Float32, Bool, Int32
+from std_msgs.msg import Float32, Bool, Int32, String
 from constants import * 
 from dynamixel_workbench_msgs.msg import *
+from dynamixel_workbench_msgs.srv import *
 from std_msgs.msg import Float32, Bool, Int32, Int32MultiArray
 
 
@@ -26,25 +27,21 @@ class TrackingCamWidget(QtWidgets.QWidget):
 
         self.mode = MANUAL  # Manual mode
 
-        self.disable_btn.clicked[bool].connect(self.enable_motors)
+        self.disable_btn.clicked[bool].connect(self.enable_motors_callback)
         self.auto_btn.clicked[bool].connect(lambda: self.change_mode(AUTO))
         self.track_btn.clicked[bool].connect(self.track_face)
-        self.home_btn.clicked[bool].connect(lambda: self.move(CMD["HOME"]))
+        self.home_btn.clicked[bool].connect(self.go_home)
 
-        #self.min_yaw.clicked[bool].connect(lambda: self.move(CMD["MIN_YAW"]))
-        #self.plus_yaw.clicked[bool].connect(lambda: self.move(CMD["PLUS_YAW"]))
-        #self.min_pitch.clicked[bool].connect(lambda: self.move(CMD["MIN_PITCH"]))
-        #self.plus_pitch.clicked[bool].connect(lambda: self.move(CMD["PLUS_PITCH"]))
-        #self.min_roll.clicked[bool].connect(lambda: self.move(CMD["MIN_ROLL"]))
-        #self.plus_roll.clicked[bool].connect(lambda: self.move(CMD["PLUS_ROLL"]))
-
-        self.yaw_slider.valueChanged[int].connect(lambda: self.slider_callback())
+        self.yaw_slider.valueChanged[int].connect(self.slider_callback_yaw)
+        self.pitch_slider.valueChanged[int].connect(self.slider_callback_pitch)
+        self.roll_slider.valueChanged[int].connect(self.slider_callback_roll)
         
         self.val_yaw.setText(str(0))
         self.val_pitch.setText(str(0)) 
         self.val_roll.setText(str(0))
 
-        self.cmd_pub = rospy.Publisher("cmd_manual", Int32, queue_size=10)
+        self.cmd_pub = rospy.Publisher("cmd_manual", DynamixelCommandRequest, queue_size=10)
+        self.auto_pub = rospy.Publisher("auto_mode", Bool, queue_size=10)
         self.motor_sub = rospy.Subscriber("motors_position", Int32MultiArray, self.update_motors)
 
     def update_motors(self, state):
@@ -52,7 +49,15 @@ class TrackingCamWidget(QtWidgets.QWidget):
         self.val_yaw.setText(str(state.data[0]))
         self.val_pitch.setText(str(state.data[1])) 
         self.val_roll.setText(str(state.data[2]))
-        pass
+        
+    def go_home(self):
+        self.change_mode(MANUAL)
+        self.call_motor_cmd(1, "Goal_Position", YAW_HOME)  
+        self.call_motor_cmd(2, "Goal_Position", PITCH_HOME)  
+        self.call_motor_cmd(3, "Goal_Position", ROLL_HOME) 
+        self.yaw_slider.setValue(50)
+        self.pitch_slider.setValue(50)
+        self.roll_slider.setValue(50)
 
     def change_mode(self, mode):
         if mode == MANUAL:
@@ -62,25 +67,31 @@ class TrackingCamWidget(QtWidgets.QWidget):
         if mode == AUTO:
             self.auto_btn.setEnabled(False)
             self.mode = AUTO
+            self.auto_pub.publish(True)
 
-    def enable_motors(self, enable):
+    def enable_motors_callback(self, enable):
         if self.disable_btn.text() == "Enable":
-            self.cmd_pub.publish(CMD["ENABLE"])
+            self.enable_motors(True)
             self.disable_btn.setText("Disable")
 
         elif self.disable_btn.text() == "Disable":
-            self.cmd_pub.publish(CMD["DISABLE"])
+            self.enable_motors(False)
             self.disable_btn.setText("Enable")
 
     def track_face(self):
+        #TODO
         print("TRACK FACE")
         pass
 
-    def move(self, dir):
-        self.cmd_pub.publish(dir)
-
     # Call motor service
     def call_motor_cmd(self, id, command, value):
+        request = DynamixelCommandRequest()
+        request.id = id
+        request.addr_name = command
+        request.value = value
+        self.cmd_pub.publish(request)
+        
+    def direct_cmd(self, id, command, value):
         rospy.wait_for_service('/dynamixel_workbench/dynamixel_command', 0.1)
         try:
             move_motor = rospy.ServiceProxy('/dynamixel_workbench/dynamixel_command', DynamixelCommand)
@@ -88,9 +99,9 @@ class TrackingCamWidget(QtWidgets.QWidget):
             request.id = id
             request.addr_name = command
             request.value = value
-            print request
+            self.cmd_pub.publish(request)
             response = move_motor(request)
-
+            
         except rospy.ServiceException, e:
             print "Service call failed: %s"%e
 
@@ -100,8 +111,15 @@ class TrackingCamWidget(QtWidgets.QWidget):
         self.call_motor_cmd(2, "Torque_Enable", enable)
         self.call_motor_cmd(3, "Torque_Enable", enable)
 
+    def slider_callback_yaw(self, value):
+        self.change_mode(MANUAL)
+        self.call_motor_cmd(1, "Goal_Position", (value-50)*2048/100 + YAW_HOME)    
 
-    def slider_callback(self, axis, value):
-        self.enable(True)
-        self.call_motor_cmd(axis, "Goal_Position", value)
+    def slider_callback_pitch(self, value):
+        self.change_mode(MANUAL)
+        self.call_motor_cmd(2, "Goal_Position", (value-50)*2048/100 + PITCH_HOME) 
+
+    def slider_callback_roll(self, value):
+        self.change_mode(MANUAL)
+        self.call_motor_cmd(3, "Goal_Position", (value-50)*2048/100 + ROLL_HOME) 
 
