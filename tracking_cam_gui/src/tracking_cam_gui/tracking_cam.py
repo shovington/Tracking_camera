@@ -113,13 +113,13 @@ class TrackingCamWidget(QtWidgets.QWidget):
 
     def slider_callback_yaw(self, value):
         self.change_mode(MANUAL)
-        self.call_motor_cmd(1, "Goal_Position", (value-50)*2048/100 + YAW_HOME)    
+        self.direct_cmd(1, "Goal_Position", (value-50)*2048/100 + YAW_HOME)    
 
     def slider_callback_pitch(self, value):
         self.change_mode(MANUAL)
-        self.call_motor_cmd(2, "Goal_Position", (value-50)*2048/100 + PITCH_HOME) 
+        self.direct_cmd(2, "Goal_Position", (value-50)*2048/100 + PITCH_HOME) 
 
     def slider_callback_roll(self, value):
         self.change_mode(MANUAL)
-        self.call_motor_cmd(3, "Goal_Position", (value-50)*2048/100 + ROLL_HOME) 
+        self.direct_cmd(3, "Goal_Position", (value-50)*2048/100 + ROLL_HOME) 
 
