@@ -1,7 +1,0 @@
-<?xml version='1.0'?>
-<launch>
-
-<node pkg="tracking_cam_gui" name="tracking_cam_gui" type="tracking_cam_gui" respawn="false" output="screen">
-	</node>
-
-</launch>

@@ -62,6 +62,7 @@
 
   <!-- The export tag contains other, unspecified, tags -->
   <export>
+    <rqt_gui plugin="${prefix}/plugin.xml"/>
     <!-- Other tools can request additional information be placed here -->
 
   </export>

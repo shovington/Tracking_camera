@@ -11,6 +11,8 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   std_msgs
+  rqt_gui
+  rqt_gui_py
 )
 
 ## System dependencies are found with CMake's conventions
@@ -20,7 +22,7 @@ find_package(catkin REQUIRED COMPONENTS
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
 ## See http://ros.org/doc/api/catkin/html/user_guide/setup_dot_py.html
-# catkin_python_setup()
+catkin_python_setup()
 
 ################################################
 ## Declare ROS messages, services and actions ##
@@ -116,7 +118,6 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
-# include
   ${catkin_INCLUDE_DIRS}
 )
 
@@ -159,10 +160,11 @@ include_directories(
 
 ## Mark executable scripts (Python etc.) for installation
 ## in contrast to setup.py, you can choose the destination
-# install(PROGRAMS
-#   scripts/my_python_script
-#   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-# )
+install(PROGRAMS
+  scripts/tracking_camera
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
+
 
 ## Mark executables and/or libraries for installation
 # install(TARGETS ${PROJECT_NAME} ${PROJECT_NAME}_node
@@ -177,6 +179,18 @@ include_directories(
 #   FILES_MATCHING PATTERN "*.h"
 #   PATTERN ".svn" EXCLUDE
 # )
+
+install(DIRECTORY
+  resource
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+)
+
+## Mark other files for installation (e.g. launch and bag files, etc.)
+install(FILES
+  plugin.xml
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+)
+
 
 ## Mark other files for installation (e.g. launch and bag files, etc.)
 # install(FILES
