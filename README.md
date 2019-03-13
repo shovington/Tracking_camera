@@ -17,7 +17,7 @@ To control the motors with ROS you’ll need to put the OpenCR board into a usb 
 First, change your port permissions by typing this command line:
 
 ```bash
-[user@machine ~]$ sudo usermod -a -G dialout user
+[user@machine ~]$ sudo usermod -a -G dialout <user>
 ```
 Note that you have to logout/login to make the change available
 .
@@ -40,7 +40,7 @@ Dependencies:
 2. usb_cam
 
 ```bash
-sudo apt-get install ros-melodic-dynamixel_workbench
+sudo apt-get install ros-melodic-dynamixel-workbench
 sudo apt-get install ros-melodic-usb-cam
 ```
 darknet_ros is not yet supported on Melodic, so you will need to build it from the source.
@@ -50,6 +50,7 @@ https://github.com/leggedrobotics/darknet_ros
 After cloning our repository, build in your catkin workspace :
 
 ```bash
+git clone https://github.com/shovington/Tracking_camera.git
 catkin_make
 ```
 
