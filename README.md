@@ -14,7 +14,7 @@ Tracking camera : This package controls a 3 axis 3D printed gimbal using compute
 
 To control the motors with ROS you’ll need to put the OpenCR board into a usb to dynamixel bridge. 
 
-First, change your port permissions
+First, change your port permissions by typing this command line:
 
 ```bash
 [user@machine ~]$ sudo usermod -a -G dialout user
