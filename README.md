@@ -53,6 +53,8 @@ To run only manual mode
 
 Here's what our user interface looks like when launched.
 
+![prototype.jpg](prototype.jpg)
+
 ## Config files
 
 Darknet config
