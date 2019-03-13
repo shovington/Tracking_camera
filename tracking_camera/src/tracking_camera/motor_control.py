@@ -20,14 +20,10 @@ class MotorControl():
         self.call_motor_cmd(2, "Position_P_Gain", 350)
         self.call_motor_cmd(3, "Position_P_Gain", 400)
         
-        self.yaw = 0
-        self.pitch = 0
-        self.roll = 0
+	self.angles = [0, 0, 0]
         
     def update_motors(self, angles):
-        self.yaw = angles[0]
-        self.pitch = angles[1]
-        self.roll = angles[2]
+        self.angles = angles
 
     # Enable motors
     def enable_motors(self, enable):
@@ -43,6 +39,9 @@ class MotorControl():
     def move_axis(self, axis, value, limits):
         self.call_motor_cmd(axis, "Goal_Position", value*2048/(limits[1]-limits[0]) + HOME[axis-1])
         
+    def move_relative(self, axis, value):
+        self.call_motor_cmd(axis, "Goal_Position", value + self.angles[axis-1])
+
     # Call motor service
     def call_motor_cmd(self, id, cmd, val):
         rospy.wait_for_service('/dynamixel_workbench/dynamixel_command', 0.1)

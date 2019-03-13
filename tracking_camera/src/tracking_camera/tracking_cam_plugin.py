@@ -10,9 +10,11 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 from .tracking_cam import TrackingCamWidget
 from .motor_control import MotorControl
+from .track_face import TrackFace
 from constants import *
 from dynamixel_workbench_msgs.msg import *
 from dynamixel_workbench_msgs.srv import *
+from darknet_ros_msgs.msg import BoundingBoxes
 
 
 class TrackingCamPlugin(Plugin):
@@ -69,10 +71,12 @@ class TrackingCamMain():
     def __init__(self):
         self.view = TrackingCamWidget(self)
         self.motor_control = MotorControl()
+	self.face_tracker = TrackFace()
 
         self.mode = MANUAL
 
         self.motor_sub = rospy.Subscriber("/dynamixel_workbench/dynamixel_state", DynamixelStateList, self.update_motors)
+        self.box_sub = rospy.Subscriber("/darknet_ros/bounding_boxes", BoundingBoxes, self.box_callback)
 
     def get_view(self):
         return self.view
@@ -101,8 +105,13 @@ class TrackingCamMain():
     def enable_motors(self, enable):
         self.motor_control.enable_motors(enable)
 
-    def track_face(self):
-        pass
+    def box_callback(self, box):
+	if self.mode == AUTO:
+	    offset = self.face_tracker.box_offset(box)
+            if abs(offset[0]) > 20:
+                self.motor_control.move_relative(1, -0.5*offset[0])
+            if abs(offset[1]) > 20:
+                self.motor_control.move_relative(2, -0.5*offset[1])
 
     def move_axis(self, axis, value, limits):
         self.change_mode(MANUAL)

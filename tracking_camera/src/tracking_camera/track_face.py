@@ -1,34 +1,16 @@
 #!/usr/bin/env python
+
 import numpy as np
-import cv2
 import rospy
 from rospkg import RosPack
 from std_msgs.msg import String, Int32
-from sensor_msgs.msg import Image, CompressedImage
 from darknet_ros_msgs.msg import BoundingBoxes
-from cv_bridge import CvBridge, CvBridgeError
 
-class TrackPerson():
+class TrackFace():
     def __init__(self):
-        # Path where th classifier is
-        self.bridge = CvBridge()
-        self.img_sub = rospy.Subscriber("/darknet_ros/detection_image",Image, self.img_callback) #Subscriber(topic, condition, to do)
-        self.box_sub = rospy.Subscriber("/darknet_ros/bounding_boxes", BoundingBoxes, self.box_callback)
-        rospy.spin()
+	pass
 
-    def img_callback(self, img):
-
-        image = self.bridge.imgmsg_to_cv2(img)
-        #print(image.shape)
-        # Display the resulting image
-        cv2.imshow('frame',image)
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            raise ROSInterruptException
-
-        else:
-            pose = None
-
-    def box_callback(self, box): #We take the first index which is the one who has the most probability
+    def box_offset(self, box): #We take the first index only which is the one who has the most probability
 
         center_image=list()
         center_image=[320,240]
@@ -48,7 +30,6 @@ class TrackPerson():
 
                 break
 
-        print(command)
         return command
 
 

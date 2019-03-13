@@ -12,12 +12,5 @@
   </node>
 
 
-  <include file="$(find tracking_camera)/launch/darknet.launch"/>
-
-  <node name="track_face" pkg="tracking_camera" type="track_face.py" output="screen" >
-  </node>
-
-
-
 
 </launch>

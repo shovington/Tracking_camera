@@ -46,18 +46,19 @@ class TrackingCamWidget(QtWidgets.QWidget):
         self.val_roll.setText(str(angles[2]))
         
     def home_callback(self):
+        self.change_mode(MANUAL)
         self.main.go_home()
         self.yaw_slider.setValue(50)
         self.pitch_slider.setValue(50)
         self.roll_slider.setValue(50)
 
     def change_mode(self, mode):
-        self.main.change_mode(mode)
         if mode == MANUAL:
             self.auto_btn.setEnabled(True)
             
         if mode == AUTO:
             self.auto_btn.setEnabled(False)
+        self.main.change_mode(mode)
  
     def enable_motors_callback(self, enable):
         if self.disable_btn.text() == "Enable":
@@ -69,7 +70,7 @@ class TrackingCamWidget(QtWidgets.QWidget):
             self.disable_btn.setText("Enable")
 
     def track_face_callback(self):
-        self.main.track_face()
+        pass
     
     def slider_callback_yaw(self, value):
         self.change_mode(MANUAL)
