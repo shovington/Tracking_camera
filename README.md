@@ -12,6 +12,21 @@ Tracking camera : This package controls a 3 axis 3D printed gimbal using compute
 
 ### OpenCR setup
 
+To control the motors with ROS you’ll need to put the OpenCR board into a usb to dynamixel bridge. 
+
+First, change your port permissions
+
+```bash
+[user@machine ~]$ sudo usermod -a -G dialout user
+```
+Note that you have to logout/login to make the change available
+.
+Then follow the instructions [here](http://emanual.robotis.com/docs/en/parts/controller/opencr10/#arduino-ide) to make your board visible on Arduino IDE. You only have to follow the steps from 4. 1. Install on Linux to 4. 1. 5. 3. Port Setting
+
+Now you can upload the following code File -> Examples -> OpenCR -> 10.Etc -> usb_to_dxl
+
+
+
 ### Software
 
 For this project, you will need a computer or Jetson Xavier as well as an OpenCR. First of all, you need to have Ubuntu 18.04 installed on your computer as well as ROS Melodic. Here are the installation steps :
@@ -53,7 +68,7 @@ To run only manual mode
 
 Here's what our user interface looks like when launched.
 
-![prototype.jpg](prototype.jpg)
+![ui.png](ui.png)
 
 ## Config files
 
