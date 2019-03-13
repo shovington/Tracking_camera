@@ -40,8 +40,6 @@ Dependencies:
 2. usb_cam
 
 ```bash
-# In case you are missing it
-
 sudo apt-get install ros-melodic-dynamixel_workbench
 sudo apt-get install ros-melodic-usb-cam
 ```
