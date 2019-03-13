@@ -4,6 +4,8 @@
 
 Tracking camera : This package controls a 3 axis 3D printed gimbal using computer vision to track human faces and/or body. The gimbal can also be controlled manually via an rqt interface. Everything works in a ROS environnement. In this package, you can find all the mechanical parts needed to build our project as well as all the code to make it work. 
 
+![prototype.jpg](prototype.jpg)
+
 ## Install
 
 ### Mechanical assembly
@@ -24,6 +26,7 @@ Dependencies:
 
 ```bash
 # In case you are missing it
+
 sudo apt-get install ros-melodic-dynamixel_workbench
 sudo apt-get install ros-melodic-usb-cam
 ```
@@ -48,10 +51,7 @@ To run only manual mode
 	roslaunch tracking_camera manual.launch
 
 
-
-
-
-
+Here's what our user interface looks like when launched.
 
 ## Config files
 
@@ -77,7 +77,7 @@ Contains yolo configuration : Accuracy threshold, classes to track.
 
 ### tracking_cam_plugin node
 
-This is the only node in the package. It receives callback from the UI and call the corresponding function in subclasses.
+This is the only node in the package. It is a rqt plugin. You can control the gimbal manually using the UI sliders. It also subscribes to darknet and controls the gimbal to track faces when it is put in auto mode.
 
 ##### Subscribed Topics
 
