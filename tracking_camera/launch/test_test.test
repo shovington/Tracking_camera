@@ -1,0 +1,6 @@
+<?xml version='1.0'?>
+<launch>
+
+<test test-name="test_unit_test" pkg="tracking_camera" type="test_unit_test.py" time-limit="10.0" args="-v" />
+
+</launch>

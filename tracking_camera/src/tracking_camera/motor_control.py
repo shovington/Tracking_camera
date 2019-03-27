@@ -46,48 +46,59 @@ class MotorControl():
 
     # Enable motors
     def enable_motors(self, enable):
-        if self.motors == 0:
-            return
-
-        self.call_motor_cmd(1, "Torque_Enable", enable)
-        self.call_motor_cmd(2, "Torque_Enable", enable)
-        self.call_motor_cmd(3, "Torque_Enable", enable)
+        
+        request = [0, 0, 0]
+        request[0] = DynamixelCommandRequest()
+        request[1] = DynamixelCommandRequest()
+        request[2] = DynamixelCommandRequest()
+        
+        request[0] = self.call_motor_cmd(1, "Torque_Enable", enable)
+        request[1] = self.call_motor_cmd(2, "Torque_Enable", enable)
+        request[2] = self.call_motor_cmd(3, "Torque_Enable", enable)
+        return request
 
     def go_home(self):
-        if self.motors == 0:
-            return
+        
+        request = [0, 0, 0]
+        request[0] = DynamixelCommandRequest()
+        request[1] = DynamixelCommandRequest()
+        request[2] = DynamixelCommandRequest()
 
-        self.call_motor_cmd(1, "Goal_Position", YAW_HOME)  
-        self.call_motor_cmd(2, "Goal_Position", PITCH_HOME)  
-        self.call_motor_cmd(3, "Goal_Position", ROLL_HOME)
+        request[0] = self.call_motor_cmd(1, "Goal_Position", YAW_HOME)  
+        request[1] = self.call_motor_cmd(2, "Goal_Position", PITCH_HOME)  
+        request[2] = self.call_motor_cmd(3, "Goal_Position", ROLL_HOME)
+        return request
 
     def move_axis(self, axis, value, limits):
-        if self.motors == 0:
-            return
 
-        self.call_motor_cmd(axis, "Goal_Position", value*2048/(limits[1]-limits[0]) + HOME[axis-1])
+        request = DynamixelCommandRequest()
+        request = self.call_motor_cmd(axis, "Goal_Position", value*2048/SLIDER_RANGE + HOME[axis-1])
+        return request
         
     def move_relative(self, axis, value):
-        if self.motors == 0:
-            return
+        
+        request = DynamixelCommandRequest()
 
         if self.limits[axis-1][1] < value+ self.angles[axis-1] or value+ self.angles[axis-1] < self.limits[axis-1][0]:
             print("Out of range")
-            pass
+            request.id = 0
+            request.addr_name = 0
+            request.value = 0
+            return request
         else:
-            self.call_motor_cmd(axis, "Goal_Position", value + self.angles[axis-1])
+            request = self.call_motor_cmd(axis, "Goal_Position", value + self.angles[axis-1])
+            return request
 
     # Call motor service
     def call_motor_cmd(self, id, cmd, val):
         if self.motors == 0:
-            return
-
-        try:
-            move_motor = rospy.ServiceProxy('/dynamixel_workbench/dynamixel_command', DynamixelCommand)            
             request = DynamixelCommandRequest()
             request.id = id
             request.addr_name = cmd
             request.value = val
+            return request
+
+        try:           
             response = self.motor_proxy(request)
             
         except rospy.ServiceException, e:
