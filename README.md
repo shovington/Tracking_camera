@@ -105,3 +105,11 @@ This is the only node in the package. It is a rqt plugin. You can control the gi
 
 	Position and dimension of detected objects
 
+## Run automated tests
+
+Enter this line in terminal:
+```bash
+rostest tracking_camera test_test.test 
+
+```
+
