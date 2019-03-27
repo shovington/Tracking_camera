@@ -15,6 +15,7 @@ from constants import *
 from dynamixel_workbench_msgs.msg import *
 from dynamixel_workbench_msgs.srv import *
 from darknet_ros_msgs.msg import BoundingBoxes
+from timeit import default_timer as timer
 
 
 class TrackingCamPlugin(Plugin):
@@ -70,19 +71,20 @@ class TrackingCamPlugin(Plugin):
 class TrackingCamMain():
     def __init__(self):
         self.view = TrackingCamWidget(self)
+        self.face_tracker = TrackFace()
         self.motor_control = MotorControl()
-	self.face_tracker = TrackFace()
-
+        self.offset = [0, 0]
         self.mode = MANUAL
-
         self.motor_sub = rospy.Subscriber("/dynamixel_workbench/dynamixel_state", DynamixelStateList, self.update_motors)
         self.box_sub = rospy.Subscriber("/darknet_ros/bounding_boxes", BoundingBoxes, self.box_callback)
+
+        self.timer = rospy.Timer(rospy.Duration(0.2), self.move_auto)
 
     def get_view(self):
         return self.view
 
     def change_mode(self, mode):
-    	self.mode = mode
+        self.mode = mode
 
     # Read motor state    
     def update_motors(self, state):
@@ -100,14 +102,17 @@ class TrackingCamMain():
     def go_home(self):
         self.change_mode(MANUAL)
         self.motor_control.go_home()
-     
+
     # Enable motors
     def enable_motors(self, enable):
         self.motor_control.enable_motors(enable)
 
     def box_callback(self, box):
-	if self.mode == AUTO:
-	    offset = self.face_tracker.box_offset(box)
+        self.offset = self.face_tracker.box_offset(box)
+
+    def move_auto(self, event):
+        if self.mode == AUTO:
+            offset = self.offset
             if abs(offset[0]) > 20:
                 self.motor_control.move_relative(1, -0.5*offset[0])
             if abs(offset[1]) > 20:

@@ -23,7 +23,7 @@ class TrackFace():
             if box.bounding_boxes[i].Class=="person":
 
                 center_box.append((box.bounding_boxes[i].xmin+box.bounding_boxes[i].xmax)/2)
-                center_box.append((box.bounding_boxes[i].ymin+box.bounding_boxes[i].ymax)/2)
+                center_box.append((box.bounding_boxes[i].ymin+box.bounding_boxes[i].ymax/3))
 
                 command.append(center_box[0]-center_image[0])
                 command.append(center_box[1]-center_image[1])

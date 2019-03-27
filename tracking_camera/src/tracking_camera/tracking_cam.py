@@ -41,10 +41,10 @@ class TrackingCamWidget(QtWidgets.QWidget):
         self.val_roll.setText(str(0))
 
     def update_motors(self, angles):
-        self.val_yaw.setText(str(angles[0]))
-        self.val_pitch.setText(str(angles[1])) 
-        self.val_roll.setText(str(angles[2]))
-        
+        self.val_yaw.setText(str((angles[0]-YAW_HOME)*180/2048))
+        self.val_pitch.setText(str((angles[1]-PITCH_HOME)*180/2048))
+        self.val_roll.setText(str((angles[2]-ROLL_HOME)*180/2048))
+
     def home_callback(self):
         self.change_mode(MANUAL)
         self.main.go_home()
