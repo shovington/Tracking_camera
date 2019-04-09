@@ -78,7 +78,7 @@ class TrackingCamMain():
         self.motor_sub = rospy.Subscriber("/dynamixel_workbench/dynamixel_state", DynamixelStateList, self.update_motors)
         self.box_sub = rospy.Subscriber("/darknet_ros/bounding_boxes", BoundingBoxes, self.box_callback)
 
-        self.timer = rospy.Timer(rospy.Duration(0.2), self.move_auto)
+        self.timer = rospy.Timer(rospy.Duration(0.05), self.move_auto)
 
     def get_view(self):
         return self.view
@@ -117,6 +117,7 @@ class TrackingCamMain():
                 self.motor_control.move_relative(1, -0.5*offset[0])
             if abs(offset[1]) > 20:
                 self.motor_control.move_relative(2, -0.5*offset[1])
+            self.offset = [0,0]
 
     def move_axis(self, axis, value, limits):
         self.change_mode(MANUAL)

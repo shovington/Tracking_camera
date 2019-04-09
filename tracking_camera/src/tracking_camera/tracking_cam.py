@@ -29,7 +29,6 @@ class TrackingCamWidget(QtWidgets.QWidget):
 
         self.disable_btn.clicked[bool].connect(self.enable_motors_callback)
         self.auto_btn.clicked[bool].connect(lambda: self.change_mode(AUTO))
-        self.track_btn.clicked[bool].connect(self.track_face_callback)
         self.home_btn.clicked[bool].connect(self.home_callback)
 
         self.yaw_slider.valueChanged[int].connect(self.slider_callback_yaw)
@@ -68,9 +67,6 @@ class TrackingCamWidget(QtWidgets.QWidget):
         elif self.disable_btn.text() == "Disable":
             self.main.enable_motors(False)
             self.disable_btn.setText("Enable")
-
-    def track_face_callback(self):
-        pass
     
     def slider_callback_yaw(self, value):
         self.change_mode(MANUAL)

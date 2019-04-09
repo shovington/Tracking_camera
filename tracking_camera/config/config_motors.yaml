@@ -8,8 +8,8 @@ yaw:
   Operating_Mode: 3
   Profile_Acceleration: 0
   Profile_Velocity: 0
-  Min_Position_Limit: 2040
-  Max_Position_Limit: 4095
+  Min_Position_Limit: 1194
+  Max_Position_Limit: 3242
 
 pitch:
   ID: 2
@@ -17,8 +17,8 @@ pitch:
   Operating_Mode: 3
   Profile_Acceleration: 0
   Profile_Velocity: 0
-  Max_Position_Limit: 3199
-  Min_Position_Limit: 1151
+  Max_Position_Limit: 3594
+  Min_Position_Limit: 1546
 
 roll:
   ID: 3
@@ -26,5 +26,5 @@ roll:
   Operating_Mode: 3
   Profile_Acceleration: 0
   Profile_Velocity: 0
-  Min_Position_Limit: 2040
-  Max_Position_Limit: 4095
+  Min_Position_Limit: 1024
+  Max_Position_Limit: 3072

@@ -1,0 +1,13 @@
+<?xml version='1.0'?>
+<launch>
+
+<include file="$(find tracking_camera)/launch/motors.launch"/>
+
+<include file="$(find tracking_camera)/launch/camera.launch"/>
+
+<include file="$(find tracking_camera)/launch/darknet.launch"/>
+
+
+<node name = "tracking_camera" pkg = "rqt_gui" type = "rqt_gui" respawn = "false" output = "screen" args = "--perspective-file $(find tracking_camera)/launch/tracking_camera.perspective"/>
+
+</launch>
