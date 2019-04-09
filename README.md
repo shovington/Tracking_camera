@@ -9,6 +9,7 @@ Tracking camera : This package controls a 3 axis 3D printed gimbal using compute
 ## Install
 
 ### Mechanical assembly
+To assemble the mechanical parts you'll have to 3D print a few parts and buy some others. For complete instruction about how to procede, follow [this guide](https://github.com/shovington/Tracking_camera/blob/master/Mechanical/Assembly%20Guide.pdf)
 
 ### OpenCR setup
 
