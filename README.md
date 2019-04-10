@@ -59,7 +59,7 @@ catkin_make
 
 Once everything is installed, run our project with
 
-	roslaunch tracking_camera tracking_cam.launch
+	roslaunch tracking_camera full.launch
 
 To run only manual mode
 
